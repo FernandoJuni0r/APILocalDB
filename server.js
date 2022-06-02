@@ -10,14 +10,15 @@ server.listen(port)
 client.connect()
 
 app.get('/login', (req, res)=>{
-    const email = req.body.email
-    const pass  = req.body.password 
+   const email = req.body.email
+   const pass  = req.body.pass 
 
-    client.query("Select id from login where nome ='"+email+"' and senha='"+pass+"'", (err, result)=>{
+    client.query("Select id from login where email ='"+email+"' and senha='"+pass+"'", (err, result)=>{
         if(!err){
             return(true)
         }
         else{
+            console.log(err.message)
             return(false)
         }
     })
