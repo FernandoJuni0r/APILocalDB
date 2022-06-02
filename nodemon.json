@@ -2,8 +2,8 @@
     "env" :{
         "pg_user" :     "postgres"  ,
         "pg_password" : "0809"  ,
-        "pg_database" : "Biblioteca_Virtual"  ,
+        "pg_database" : "Blioteca_Virtual"  ,
         "pg_host" :     "localhost"  ,
-        "pg_port" :     "5534"
+        "pg_port" :     5534
     }
 }

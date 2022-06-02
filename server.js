@@ -1,24 +1,67 @@
-const http = require('http')
-const port = process.env.PORT || 3000
-const server = http.createServer()
-const app = require('./app')
+const http    = require('http')
+const port    = process.env.PORT || 3000
+const app     = require('./app')
+const client  = require('./Database')
+const server  = http.createServer(app)
 
-app.use('/', (req, res, next) =>{
-    res.status(200).send({
-        mensagem: 'correto'
-    })
-})
-
-app.get('/consulta', (req, res, next) =>{
-    res.status(200).send({
-        mensagem: 'correto'
-    })
-})
-
-app.post('/insert', (req, res, next) =>{
-    res.status(200).send({
-        mensagem: 'ta'
-    })
-})
 
 server.listen(port)
+
+client.connect()
+
+app.get('/login', (req, res)=>{
+    const email = req.body.email
+    const pass  = req.body.password 
+
+    client.query("Select id from login where nome ='"+email+"' and senha='"+pass+"'", (err, result)=>{
+        if(!err){
+            return(true)
+        }
+        else{
+            return(false)
+        }
+    })
+    client.end
+})
+
+//      {                                               sintaxe para insert no banco
+//          "titulo": "machado de asis",
+//          "autor": "asis machado",
+//          "link": "https://daskjdaldjasdaksdl",
+//           "editora": "cultura"
+//      }
+
+
+app.post('/cadastro_livros', (req, res)=>{
+
+    const titulo  = req.body.titulo
+    const autor   = req.body.autor
+    const editora = req.body.editora
+    const link    = req.body.link
+
+    client.query("INSERT INTO catalogo_livros (titulo, autor, editora, link) VALUES ( '"+titulo+"' , '"+autor+"' , '"+editora+"', '"+link+"' )", (err, result)=>{
+        if(!err){
+            res.send('Cadastro de livro Realizado com sucesso')
+        }
+        else{
+            console.log(err.message)
+        }
+    })
+})
+
+app.post('/cadastro_usuario', (req, res)=>{
+
+    const nome   = req.body.nome
+    const email  = req.body.email
+    const senha  = req.body.senha
+
+    client.query("INSERT INTO login (nome, email, senha) VALUES ( '"+nome+"' , '"+email+"' , '"+senha+"' )", (err, result)=>{
+        if(!err){
+            res.send('Cadastro de usuario Realizado com sucesso')
+        }
+        else{
+            console.log(err.message)
+        }
+    })
+})
+

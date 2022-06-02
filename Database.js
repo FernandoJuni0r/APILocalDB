@@ -1,11 +1,11 @@
-const pg = require('pg')
+const {Client} = require('pg')
 
-var pool = pg.createPool({
-    "user": process.env.pg_user,
-    "password": process.env.pg_password,
-    "database": process.env.pg_database,
-    "host": process.env.pg_host,
-    "port": process.env.pg_port
+const client = new Client({
+    host:   "localhost",
+    user:   "postgres",
+    port:       5432,
+    password:   '0809',
+    database: "Blioteca_Virtual"
 })
 
-exports.pool = pool
+module.exports = client
