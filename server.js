@@ -1,3 +1,4 @@
+const { send } = require('express/lib/response')
 const http    = require('http')
 const port    = process.env.PORT || 3000
 const app     = require('./app')
@@ -15,11 +16,12 @@ app.get('/login', (req, res)=>{
 
     client.query("Select id from login where email ='"+email+"' and senha='"+pass+"'", (err, result)=>{
         if(!err){
-            return(true)
+            res.send()
+            
         }
         else{
             console.log(err.message)
-            return(false)
+
         }
     })
     client.end
