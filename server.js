@@ -12,12 +12,16 @@ client.connect()
 
 app.get('/login', (req, res)=>{
    const email = req.body.email
-   const pass  = req.body.pass 
+   const pass  = req.body.pass
 
     client.query("Select id from login where email ='"+email+"' and senha='"+pass+"'", (err, result)=>{
         if(!err){
-            res.send()
-            
+            if (result.rows.length != 1){
+                res.send(false)
+            }
+            else{
+                res.send(true)
+            }
         }
         else{
             console.log(err.message)
