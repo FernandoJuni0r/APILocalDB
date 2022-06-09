@@ -31,13 +31,18 @@ app.get('/login', (req, res)=>{
     client.end
 })
 
-//      {                                               sintaxe para insert no banco
-//          "titulo": "machado de asis",
-//          "autor": "asis machado",
-//          "link": "https://daskjdaldjasdaksdl",
-//           "editora": "cultura"
-//      }
+app.get('/livros', (req, res)=>{
 
+    client.query("select * from catalogo_livros order by id", (err, result)=>{
+        if(!err){
+            res.send(result.rows)
+        }
+        else{
+            res.send(console.log(err.message))
+        }
+    })
+    client.end
+})
 
 app.post('/cadastro_livros', (req, res)=>{
 
@@ -48,12 +53,98 @@ app.post('/cadastro_livros', (req, res)=>{
 
     client.query("INSERT INTO catalogo_livros (titulo, autor, editora, link) VALUES ( '"+titulo+"' , '"+autor+"' , '"+editora+"', '"+link+"' )", (err, result)=>{
         if(!err){
-            res.send('Cadastro de livro Realizado com sucesso')
+            res.send(true)
         }
         else{
             console.log(err.message)
+            res.send(false)
         }
     })
+    client.end
+})
+
+app.delete('/delete_livro', (req, res)=>{
+
+    const livro = req.body.titulo
+
+    client.query("delete from catalogo_livros where titulo = '"+livro+"'", (err, result)=>{
+        if(!err){
+            res.send(true)
+        }
+        else{
+            console.log(err.message)
+            res.send(false)
+        }
+    })
+    client.end
+})
+
+app.put('/update_link', (req, res)=>{
+
+    const new_link = req.body.new_link
+    const cond = req.body.titulo
+
+    client.query("update catalogo_livros set link = '"+new_link+"' where titulo = '"+cond+"'", (err, result)=>{
+        if(!err){
+            res.send(true)
+        }
+        else{
+            console.log(err.message)
+            res.send(false)
+        }
+    })
+    client.end
+})
+
+app.put('/update_editora', (req, res)=>{
+
+    const new_editora = req.body.new_editora
+    const cond2 = req.body.titulo
+
+    client.query("update catalogo_livros set editora = '"+new_editora+"' where titulo = '"+cond2+"'", (err, result)=>{
+        if(!err){
+            res.send(true)
+        }
+        else{
+            console.log(err.message)
+            res.send(false)
+        }
+    })
+    client.end
+})
+
+app.put('/update_autor', (req, res)=>{
+
+    const new_autor = req.body.new_autor
+    const cond3 = req.body.titulo
+
+    client.query("update catalogo_livros set autor = '"+new_autor+"' where titulo = '"+cond3+"'", (err, result)=>{
+        if(!err){
+            res.send(true)
+        }
+        else{
+            console.log(err.message)
+            res.send(false)
+        }
+    })
+    client.end
+})
+
+app.put('/update_titulo', (req, res)=>{
+
+    const new_titulo = req.body.new_titulo
+    const cond4 = req.body.link
+
+    client.query("update catalogo_livros set titulo = '"+new_titulo+"' where link = '"+cond4+"'", (err, result)=>{
+        if(!err){
+            res.send(true)
+        }
+        else{
+            console.log(err.message)
+            res.send(false)
+        }
+    })
+    client.end
 })
 
 app.post('/cadastro_usuario', (req, res)=>{
@@ -64,11 +155,12 @@ app.post('/cadastro_usuario', (req, res)=>{
 
     client.query("INSERT INTO login (nome, email, senha) VALUES ( '"+nome+"' , '"+email+"' , '"+senha+"' )", (err, result)=>{
         if(!err){
-            res.send('Cadastro de usuario Realizado com sucesso')
+            res.send(true)
         }
         else{
             console.log(err.message)
+            res.send(false)
         }
     })
+    client.end
 })
-
