@@ -1,29 +1,29 @@
 const { send } = require('express/lib/response')
-const http    = require('http')
-const port    = process.env.PORT || 3000
-const app     = require('./app')
-const client  = require('./Database')
-const server  = http.createServer(app)
+const http = require('http')
+const port = process.env.PORT || 5000
+const app = require('./app')
+const client = require('./Database')
+const server = http.createServer(app)
 
 
 server.listen(port)
 
 client.connect()
 
-app.get('/login', (req, res)=>{
-   const email = req.body.email
-   const pass  = req.body.pass
+app.get('/login', (req, res) => {
+    const email = req.body.email
+    const pass = req.body.pass
 
-    client.query("Select id from login where email ='"+email+"' and senha='"+pass+"'", (err, result)=>{
-        if(!err){
-            if (result.rows.length != 1){
+    client.query("Select id from login where email ='" + email + "' and senha='" + pass + "'", (err, result) => {
+        if (!err) {
+            if (result.rows.length != 1) {
                 res.send(false)
             }
-            else{
+            else {
                 res.send(true)
             }
         }
-        else{
+        else {
             console.log(err.message)
 
         }
@@ -44,12 +44,12 @@ app.get('/livros', (req, res)=>{
     client.end
 })
 
-app.post('/cadastro_livros', (req, res)=>{
+app.post('/cadastro_livros', (req, res) => {
 
-    const titulo  = req.body.titulo
-    const autor   = req.body.autor
+    const titulo = req.body.titulo
+    const autor = req.body.autor
     const editora = req.body.editora
-    const link    = req.body.link
+    const link = req.body.link
 
     client.query("INSERT INTO catalogo_livros (titulo, autor, editora, link) VALUES ( '"+titulo+"' , '"+autor+"' , '"+editora+"', '"+link+"' )", (err, result)=>{
         if(!err){
@@ -105,7 +105,7 @@ app.put('/update_editora', (req, res)=>{
         if(!err){
             res.send(true)
         }
-        else{
+        else {
             console.log(err.message)
             res.send(false)
         }
@@ -147,17 +147,17 @@ app.put('/update_titulo', (req, res)=>{
     client.end
 })
 
-app.post('/cadastro_usuario', (req, res)=>{
+app.post('/cadastro_usuario', (req, res) => {
 
-    const nome   = req.body.nome
-    const email  = req.body.email
-    const senha  = req.body.senha
+    const nome = req.body.nome
+    const email = req.body.email
+    const senha = req.body.senha
 
     client.query("INSERT INTO login (nome, email, senha) VALUES ( '"+nome+"' , '"+email+"' , '"+senha+"' )", (err, result)=>{
         if(!err){
             res.send(true)
         }
-        else{
+        else {
             console.log(err.message)
             res.send(false)
         }
