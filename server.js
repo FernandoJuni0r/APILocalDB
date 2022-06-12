@@ -19,7 +19,6 @@ app.get('/livros', (req, res)=>{
     client.query("select * from catalogo_livros order by id", (err, result)=>{
         if(!err){
             res.send(result.rows)
-            console.log(result.rows)
         }
         else{
             res.send(console.log(err.message))
@@ -33,12 +32,11 @@ app.post('/cadastro_livros', (req, res) => {
     const autor = req.body.autor
     const editora = req.body.editora
     const link = req.body.link
-    const linkImagem = req.body.linkimagem
+    const linkimagem = req.body.linkimagem
 
-    client.query("INSERT INTO catalogo_livros (titulo, autor, editora, link, linkimagem) VALUES ( '"+titulo+"' , '"+autor+"' , '"+editora+"', '"+link+"', '"+linkImagem+"' )", (err, result)=>{
+    client.query("INSERT INTO catalogo_livros (titulo, autor, editora, link, linkimagem) VALUES ('"+titulo+"' , '"+autor+"', '"+editora+"', '"+link+"', '"+linkimagem+"')", (err, result) => {
         if(!err){
             res.send(true)
-            console.log(titulo)
         }
         else{
             console.log(err.message)
@@ -48,7 +46,7 @@ app.post('/cadastro_livros', (req, res) => {
     client.end
 })
 
-app.delete('/delete_livro', (req, res)=>{
+app.delete('/delete_livro', (req, res) => {
     const titulo = req.body.titulo
 
     client.query("delete from catalogo_livros where titulo = '"+titulo+"'", (err, result)=>{
@@ -64,6 +62,7 @@ app.delete('/delete_livro', (req, res)=>{
     client.end
 })
 
+
 app.put('/update_livro', (req, res)=>{
 
     const new_linkimagem = req.body.new_linkimagem
@@ -77,7 +76,7 @@ app.put('/update_livro', (req, res)=>{
     client.query("update catalogo_livros set titulo = '"+new_titulo+"', autor = '"+new_autor+"', editora = '"+new_editora+"', linkimagem = '"+new_linkimagem+"', link = '"+new_link+"' where titulo = '"+cond+"'", (err, result)=>{
         if(!err){
             res.send(true)
-            console.log(new_titulo)
+            console.log(new_titulo, new_autor, new_editora, new_link, new_linkimagem, cond)
         }
         else{
             console.log(err.message)
