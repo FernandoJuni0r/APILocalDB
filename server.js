@@ -55,7 +55,7 @@ app.delete('/delete_livro', (req, res) => {
 
     client.query("delete from catalogo_livros where id = '"+id+"'", (err, result) => {
         if (!err) {
-            res.send(true)
+            res.send(result.rows)
         }
         else {
             console.log(err.message)
