@@ -9,18 +9,22 @@ server.listen(port)
 client.connect()
 
 app.get('/login', (req, res) => {
-    client.query("Select * from login", (err, result) => {
-      return res.send(result.rows)  
+    const { email } = req.query
+    const { senha } = req.query
+    client.query("Select nome from login where email = '" + email + "' and senha = '" + senha + "'", (err, result) => {
+        if (!err) {
+            return res.send(result.rows)
+        }
     })
     client.end
 })
 
-app.get('/livros', (req, res)=>{
-    client.query("select * from catalogo_livros order by id", (err, result)=>{
-        if(!err){
+app.get('/livros', (req, res) => {
+    client.query("select * from catalogo_livros order by id", (err, result) => {
+        if (!err) {
             res.send(result.rows)
         }
-        else{
+        else {
             res.send(console.log(err.message))
         }
     })
@@ -34,11 +38,11 @@ app.post('/cadastro_livros', (req, res) => {
     const link = req.body.link
     const linkimagem = req.body.linkimagem
 
-    client.query("INSERT INTO catalogo_livros (titulo, autor, editora, link, linkimagem) VALUES ('"+titulo+"' , '"+autor+"', '"+editora+"', '"+link+"', '"+linkimagem+"')", (err, result) => {
-        if(!err){
+    client.query("INSERT INTO catalogo_livros (titulo, autor, editora, link, linkimagem) VALUES ('" + titulo + "' , '" + autor + "', '" + editora + "', '" + link + "', '" + linkimagem + "')", (err, result) => {
+        if (!err) {
             res.send(true)
         }
-        else{
+        else {
             console.log(err.message)
             res.send(false)
         }
@@ -47,14 +51,13 @@ app.post('/cadastro_livros', (req, res) => {
 })
 
 app.delete('/delete_livro', (req, res) => {
-    const titulo = req.body.titulo
+    const { id } = req.query
 
-    client.query("delete from catalogo_livros where titulo = '"+titulo+"'", (err, result)=>{
-        if(!err){
+    client.query("delete from catalogo_livros where id = '"+id+"'", (err, result) => {
+        if (!err) {
             res.send(true)
-            console.log(titulo)
         }
-        else{
+        else {
             console.log(err.message)
             res.send(false)
         }
@@ -63,7 +66,7 @@ app.delete('/delete_livro', (req, res) => {
 })
 
 
-app.put('/update_livro', (req, res)=>{
+app.put('/update_livro', (req, res) => {
 
     const new_linkimagem = req.body.new_linkimagem
     const new_titulo = req.body.new_titulo
@@ -71,14 +74,13 @@ app.put('/update_livro', (req, res)=>{
     const new_autor = req.body.new_autor
     const new_editora = req.body.new_editora
 
-    const cond = req.body.titulo
+    const cond = req.body.id
 
-    client.query("update catalogo_livros set titulo = '"+new_titulo+"', autor = '"+new_autor+"', editora = '"+new_editora+"', linkimagem = '"+new_linkimagem+"', link = '"+new_link+"' where titulo = '"+cond+"'", (err, result)=>{
-        if(!err){
+    client.query("update catalogo_livros set titulo = '" + new_titulo + "', autor = '" + new_autor + "', editora = '" + new_editora + "', linkimagem = '" + new_linkimagem + "', link = '" + new_link + "' where id = '" + cond + "'", (err, result) => {
+        if (!err) {
             res.send(true)
-            console.log(new_titulo, new_autor, new_editora, new_link, new_linkimagem, cond)
         }
-        else{
+        else {
             console.log(err.message)
             res.send(false)
         }
@@ -92,8 +94,8 @@ app.post('/cadastro_usuario', (req, res) => {
     const email = req.body.email
     const senha = req.body.senha
 
-    client.query("INSERT INTO login (nome, email, senha) VALUES ( '"+nome+"' , '"+email+"' , '"+senha+"' )", (err, result)=>{
-        if(!err){
+    client.query("INSERT INTO login (nome, email, senha) VALUES ( '" + nome + "' , '" + email + "' , '" + senha + "' )", (err, result) => {
+        if (!err) {
             res.send(true)
         }
         else {
