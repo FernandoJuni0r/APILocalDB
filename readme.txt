@@ -1,87 +1,51 @@
-Lembre-se sempre antes de realizar qualquer coisa ligue o servidor local com um "npm start" dentro do terminal no arquivo server.js
+# Biblioteca A3 - Backend 📚
 
+Projeto desenvolvido para obtenção de nota parcial do 2º Período para a UC de Sistemas Distribuídos e Mobile.
 
-Modelo de requisiçao get: 
-/login
-{
-    "email":
-    "nome do email",
-    "pass":
-    "senha"
-}
-retorno do Get:
-TRUE : em casos de usuario e senha localizados
-FALSE: em caso de usuario e senha nao localizados ou achados em duplicidade
+## Tecnologias usadas 🔧
 
+As tecnologias adotadas no Backend foram:
 
-/livros 
-Nao necessita de req
+<ul>
+  <li>Node.JS;</li>
+  <li>Express;</li>
+  <li>CORS;</li>
+  <li>Morgan;</li>
+</ul>
 
-retorna uma lista com o conteudo de catalogo_livros do banco de dados. 
+Banco de dados: PostgreSQL
 
+## Guia de instalação 💻
 
-Modelo de requisiçao post: (/cadastro_livros)
-{
-   "titulo": "nome livro",
-   "autor": "nome autor",
-   "link": "url",
-   "editora": "edt"
-}
-retorno do post /cadastro_livros:
-TRUE : em caso de sucesso na inserçao do banco
-FALSE: para todos os demais casos
+Primeiro, você deve baixar o código zipado ou utilizar o git clone com HTTP ou SSH do repositório
 
-Modelo de requisiçao post: (/cadastro_usuario)
-{
-   "nome": "nome do usuario",
-   "email": "email para login",
-   "senha": "senha para login"
-}
-retorno do post /cadastro_usuario:
-TRUE : em caso de sucesso na inserçao do banco
-FALSE: para todos os demais casos
+```git
+  git clone link-do-repo
+```
 
-Modelo de PUT:
+Depois de clonar o repositório, acesse sua pasta e utilize o editor de texto de sua preferência.
+Após isso, baixe as dependências do código.
 
-existem 4 caminhos sendo eles '/update_link', '/update_titulo', '/update_autor' e '/update_editora'
+NPM:
+```
+  npm install
+```
 
-/update_link
-{
-   "new_link": "novo link",
-   "titulo": "titulo de referencia"
-}
+ou YARN:
+```
+  yarn
+```
 
+Após ter baixado as dependências do código, dê o seguinte comando:
 
-/update_titulo
-{
-   "new_titulo": "novo titulo",
-   "link": "link de referencia"
-}
+```
+  npm run start
+```
 
+Ou
 
-/update_autor
-{
-   "new_autor": "novo autor",
-   "titulo": "titulo de referencia"
-}
+```
+  yarn start
+```
 
-
-/update_editora
-{
-   "new_editora": "nova editora",
-   "titulo": "titulo de referencia"
-}
-
-todas retornao true ou false,
-sendo que o false so será retornado caso tenha erro junto do erro no console(da api) 
-
-
-Modelo de Delete:
-
-'/delete_livro'
-{
-   "titulo": "titulo para delete"
-}
-
-retorno de true ou false 
-
+E aproveite nosso projeto ☺️
